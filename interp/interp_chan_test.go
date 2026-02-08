@@ -19,7 +19,7 @@ func TestSendToBinaryChannelTypeAlias(t *testing.T) {
 	i := interp.New(interp.Options{})
 
 	err := i.Use(interp.Exports{
-		"test/test": {
+		"mypkg/mypkg": {
 			"IntChan":    reflect.ValueOf((*IntChan)(nil)),
 			"NewIntChan": reflect.ValueOf(NewIntChan),
 		},
@@ -31,10 +31,10 @@ func TestSendToBinaryChannelTypeAlias(t *testing.T) {
 	_, err = i.Eval(`
 package main
 
-import "test"
+import "mypkg"
 
 func main() {
-	ch := test.NewIntChan()
+	ch := mypkg.NewIntChan()
 	ch <- 42
 	val := <-ch
 	if val != 42 {
